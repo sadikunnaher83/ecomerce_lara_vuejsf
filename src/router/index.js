@@ -1,12 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Login from "../views/Auth/Login.vue";    
 import Profile from "../views/Profile.vue";
+import Home from "../views/Home.vue";
+import MyAccount from "../views/dashboard/MyAccount.vue";
 
 
 const routes = [
     {
         path: '/',
-        redirect: { name: 'login' },
+        name: 'home',
+        component: Home,
     },
     {
         path: '/login',
@@ -17,6 +20,11 @@ const routes = [
         path: '/profile',
         name: 'profile',
         component: Profile,
+    },
+    {
+        path: '/dashboard/my-account',
+        name: 'myaccount',
+        component: MyAccount,
     },
 ]
 
