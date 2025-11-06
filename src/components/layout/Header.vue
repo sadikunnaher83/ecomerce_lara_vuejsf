@@ -29,11 +29,20 @@
                 	<div class="text-center text-md-end">
                        	<ul class="header_list">
                         	<li><a href="compare.html"><i class="ti-control-shuffle"></i><span>Compare</span></a></li>
-                            <li><a href="wishlist.html"><i class="ti-heart"></i><span>Wishlist</span></a></li>
-                            <li>
+                            <li v-if="auth.isAuthenticated">
+                                <router-link to="/dashboard/wish-list">
+                                    <i class="ti-heart"></i><span>Wishlist</span>
+                                </router-link>
+                            </li>
+                            <li v-if="!auth.isAuthenticated">
                                 <router-link to="/login">
                                     <i class="ti-user"></i><span>Login</span>
                                 </router-link>
+                            </li>
+                            <li v-if="auth.isAuthenticated">
+                                <a href="javascript:void(0)" @click.prevent="logout">
+                                    <i class="ti-heart"></i><span>Logout</span>
+                                </a>
                             </li>
 						</ul>
                     </div>
@@ -312,8 +321,14 @@
 
   </template>
 
-  <script setup>
+<script setup>
+import { useAuth } from '../../stores/auth';
 
+const auth = useAuth();
+
+const logout = () => {
+    auth.logout()
+}
 
 
   </script>

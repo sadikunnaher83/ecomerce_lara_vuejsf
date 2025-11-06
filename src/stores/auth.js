@@ -4,6 +4,8 @@ import http from "../lib/http";
 
 import router from '../router'
 
+import { toast } from 'vue3-toastify';
+
 
 export const useAuth = defineStore('auth', {
     state: () => ({
@@ -20,11 +22,11 @@ export const useAuth = defineStore('auth', {
 
     actions: {
        async sendOtp(email){
-              console.log(email);
+            //   console.log(email);
              this.sending = true
 
             try {
-              const data = http.post('login/otp/send', { email })
+              const {data} = await http.post('login/otp/send', { email })
 
             //   console.log(data)
               this.email = email
@@ -36,16 +38,28 @@ export const useAuth = defineStore('auth', {
        async verifyOtp(otp){
 
         // console.log(111)
-       
+       this.verifing = true
 
             try {
 
                 const { data }  = await http.post('login', { email: this.email , otp })
                 const token = data?.data?.access_token
+                this.message = data?.messages
 
                 if(token)
                 {
-                    alert(token)
+                    // alert(token)
+                    this.access_token = token
+                    localStorage.setItem('access_token', token)
+
+                    toast.success(this.message)
+                   
+
+                    setTimeout( () => {       
+                          router.push('/dashboard/my-account')
+                    }, 2000)
+
+
                 }
                 
                 
@@ -53,5 +67,18 @@ export const useAuth = defineStore('auth', {
                 
             }
         },
+
+        logout()
+        {
+            this.access_token = null 
+            localStorage.removeItem('access_token')
+            this.email = ''
+
+            toast.success('Logout successful!')
+
+            setTimeout( () => {
+                router.push('/login')
+            }, 2000) 
+        }
     } 
 })
