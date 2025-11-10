@@ -75,7 +75,12 @@
                                         </a>
                                         <div class="product_action_box">
                                             <ul class="list_none pr_action_btn">
-                                                <li class="add-to-cart"><a href="#"><i class="icon-basket-loaded"></i> Add To Cart</a></li>
+                                                <li class="add-to-cart">
+                                                    <a href="javascript:void(0)" @click.prevent="addToCart(product.id)"><i class="icon-basket-loaded"></i>
+                                                         Add To Cart
+                                                    </a>
+
+                                                </li>
                                                 <li>
                                                     <a href="javascript:void(0)" @click.prevent="addToWish(product.id)"><i class="icon-heart"></i></a>
                                                 </li>
@@ -535,8 +540,7 @@ import { useAuth } from '../stores/auth';
 import { useRouter } from 'vue-router';
 
 const products = ref([])
-
-
+const carts = ref([])
 
 const auth = useAuth()
 const router = useRouter()
@@ -567,6 +571,38 @@ const addToWish = async (productId) => {
          })
 
         toast.success(data?.messages[0])
+        } catch (e) {
+            
+        }
+          
+    }
+
+  
+
+ 
+}
+
+const addToCart = async (productId) => {
+
+    if(!auth.isAuthenticated){
+        toast.warning('You need to login first')
+        
+        setTimeout( () => {
+
+            router.push('/login')
+
+        }, 2000)
+
+    }else{
+
+        try {
+           const {data} = await http.post('add/cart', {
+           product_id: productId,
+           quantity: 1
+
+         })
+
+        toast.success(data?.messages)
         } catch (e) {
             
         }

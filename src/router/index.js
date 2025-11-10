@@ -4,6 +4,7 @@ import Profile from "../views/Profile.vue";
 import Home from "../views/Home.vue";
 import MyAccount from "../views/dashboard/MyAccount.vue";
 import WishList from "../views/dashboard/WishList.vue";
+import Carts from "../views/dashboard/Carts.vue";
 import { useAuth } from "../stores/auth";
 
 
@@ -28,6 +29,12 @@ const routes = [
         path: '/dashboard/wish-list',
         name: 'wish-list',
         component: WishList,
+        meta: { requireAuth: true }
+    },
+    {
+        path: '/dashboard/Carts',
+        name: 'Carts',
+        component: Carts,
         meta: { requireAuth: true }
     },
     {

@@ -38,6 +38,13 @@
                                     </div>
                                     <div class="product_info">
                                         <h6 class="product_title"><a href="shop-product-detail.html">{{ item.product.title }}</a></h6>
+                                        <button
+                                            class="btn btn-sm btn-outline-danger"
+                                            @click.prevent="remove(item.product.id)">
+                                            remove
+                                        </button>
+                                        
+                                        
                                         <div class="product_price">
                                             <span class="price">${{ item.product.price }}</span>
                                             <del>$55.25</del>
@@ -91,6 +98,19 @@ const wishList = ref([])
 
 const auth = useAuth()
 const router = useRouter()
+
+
+const remove = async (productId) => {
+    try {
+      
+        const { data } = await http.post('remove/wish-list', { product_id: productId })
+          console.log(data)
+        toast.success(data.messages)
+        wishList.value = wishList.value.filter( item => item.product.id !== productId )
+    } catch (error) {
+        toast.warning(error)
+    }
+}
 
 onMounted( async () => {
     const { data } = await http.get('/wish-list')

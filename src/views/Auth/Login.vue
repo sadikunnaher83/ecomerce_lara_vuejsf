@@ -10,10 +10,12 @@
                             <h3>Login</h3>
                         </div>
                             <div class="form-group mb-3">
-                                <input type="text" 
+                                <input 
+                                type="text" 
                                 v-model="email"
                                 class="form-control" 
-                                placeholder="Your Email">
+                                placeholder="Your Email"
+                                >
                             </div>
                             <div class="form-group mb-3">
 
@@ -34,10 +36,12 @@
 
                              <div class="form-group mb-3">
 
-                                <input type="text" 
+                                <input 
+                                type="text" 
                                 v-model="otp"
                                 class="form-control"  
-                                placeholder="Your OTP">
+                                placeholder="Your OTP"
+                                >
                             </div>
                             <div class="form-group mb-3">
                                 <button 
