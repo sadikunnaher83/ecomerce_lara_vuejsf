@@ -835,7 +835,7 @@
                     <strong>Subtotal:</strong>
                     <span class="cart_price">
                       <span class="price_symbole">$</span></span
-                    >159.00
+                    >{{ cart.subtotal }}
                   </p>
                   <p class="cart_buttons">
                     <router-link

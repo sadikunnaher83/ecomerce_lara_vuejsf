@@ -538,9 +538,11 @@ import http from '../lib/http';
 import { toast } from 'vue3-toastify';
 import { useAuth } from '../stores/auth';
 import { useRouter } from 'vue-router';
+import { useCart } from '../stores/carts';
 
 const products = ref([])
-const carts = ref([])
+// const carts = ref([])
+const cart = useCart()
 
 const auth = useAuth()
 const router = useRouter()
@@ -601,7 +603,7 @@ const addToCart = async (productId) => {
            quantity: 1
 
          })
-
+         cart.cartItemsLoad()
         toast.success(data?.messages)
         } catch (e) {
             

@@ -26,10 +26,10 @@
                                 <td class="product-price" data-title="Price">${{ item.product.price }}</td>
                                 <td class="product-quantity" data-title="Quantity"><div class="quantity">
                                 <input type="button" value="-" class="minus">
-                                <input type="text" name="quantity" value="2" title="Qty" class="qty" size="4">
+                                <input type="text" name="quantity" :value="item.quantity" title="Qty" class="qty" size="4">
                                 <input type="button" value="+" class="plus">
                               </div></td>
-                              	<td class="product-subtotal" data-title="Total">$90.00</td>
+                              	<td class="product-subtotal" data-title="Total">${{item.quantity * item.price}}</td>
                                 <td class="product-remove" data-title="Remove"><a href="#"><i class="ti-close"></i></a></td>
                             </tr>
                         </tbody>
@@ -348,7 +348,7 @@
                             <tbody>
                                 <tr>
                                     <td class="cart_total_label">Cart Subtotal</td>
-                                    <td class="cart_total_amount">$349.00</td>
+                                    <td class="cart_total_amount">${{cart.subtotal}}</td>
                                 </tr>
                                 <tr>
                                     <td class="cart_total_label">Shipping</td>
@@ -356,7 +356,7 @@
                                 </tr>
                                 <tr>
                                     <td class="cart_total_label">Total</td>
-                                    <td class="cart_total_amount"><strong>$349.00</strong></td>
+                                    <td class="cart_total_amount"><strong>${{ grandTotal }}</strong></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -398,19 +398,24 @@
 
 <script setup>
 
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import http from '../../lib/http';
 import { toast } from 'vue3-toastify';
 
 import { useRouter } from 'vue-router';
 
 import { useAuth } from '../../stores/auth';
+import { useCart } from '../../stores/carts';
+
+
+const cart = useCart()
+ const carts = ref([])
 
 
 
-
-const carts = ref([])
-
+const grandTotal = computed(() => {
+  return carts.value.reduce((sum, i) => sum + i.quantity  * i.price, 0) // Calculate grand total of the cart
+})
 
 
 onMounted(async () => {
