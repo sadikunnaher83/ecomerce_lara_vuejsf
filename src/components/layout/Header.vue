@@ -812,7 +812,8 @@
               <div class="cart_box dropdown-menu dropdown-menu-right" v-if="cart.items.length > 0">
                 <ul class="cart_list" >
                   <li v-for="item in cart.items" :key="item.id">
-                    <a href="#" class="item_remove"
+                    <a href="javascript:void(0)" class="item_remove"
+                    @click.prevent="cart.removeCartItem(item.id)"
                       ><i class="ion-close"></i
                     ></a>
                     <a href="#"
