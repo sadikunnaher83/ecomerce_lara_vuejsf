@@ -44,7 +44,10 @@ export const useCart = defineStore('cart', {
             try {
                    const { data } = await http.get('/clear/cart')
                 //    console.log(data) 
-                 toast.success(data.messages)   
+                 toast.success(data.messages)  
+                 
+                 this.items = []
+                 
             } catch (error) {
                 
             }

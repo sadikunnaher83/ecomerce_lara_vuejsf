@@ -409,7 +409,7 @@ import { useCart } from '../../stores/carts';
 
 
 const cart = useCart()
- const carts = ref([])
+const carts = computed(() => cart.items)
 
 const decrement = (item) => {
     // console.log('decrement')
@@ -422,15 +422,16 @@ const increment = (item) => {
 }
 
 const grandTotal = computed(() => {
-  return carts.value.reduce((sum, i) => sum + i.quantity  * i.price, 0) // Calculate grand total of the cart
+    return carts.value.reduce((sum, i) => sum + i.quantity  * i.price, 0) // Calculate grand total of the cart
 })
 
 
 onMounted(async () => {
 
     try {
-         const { data } = await http.get('/carts')
-         carts.value = data?.data ?? []
+       if(cart.items.length == 0){
+         await cart.cartItemsLoad()
+       }
     } catch (error) {
         
     }
