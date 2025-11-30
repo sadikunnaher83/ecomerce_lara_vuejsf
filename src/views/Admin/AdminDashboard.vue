@@ -1,0 +1,12 @@
+<template>
+
+<h2>Admin Dashboard</h2>
+
+</template>
+
+
+<script setup>
+
+
+
+</script>

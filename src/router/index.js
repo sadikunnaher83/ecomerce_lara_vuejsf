@@ -6,6 +6,9 @@ import MyAccount from "../views/dashboard/MyAccount.vue";
 import WishList from "../views/dashboard/WishList.vue";
 import Carts from "../views/dashboard/Carts.vue";
 import { useAuth } from "../stores/auth";
+import AdminLogin from "../views/Admin/AdminLogin.vue";
+import AdminDashboard from "../views/Admin/AdminDashboard.vue";
+
 
 
 const routes = [
@@ -42,6 +45,16 @@ const routes = [
         name: 'myaccount',
         component: MyAccount,
         meta: { requireAuth: true }
+    },
+    {
+        path: '/admin/login',
+        name: 'admin.login',
+        component: AdminLogin,
+    },
+    {
+        path: '/admin/dashboard',
+        name: 'admin.dashboard',
+        component: AdminDashboard,
     },
 ]
 

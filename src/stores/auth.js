@@ -14,6 +14,7 @@ export const useAuth = defineStore('auth', {
         sending: false,
         message: '',
         verifing: false,
+        user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null,
     }),
 
     getters: {
@@ -44,7 +45,19 @@ export const useAuth = defineStore('auth', {
 
                 const { data }  = await http.post('login', { email: this.email , otp })
                 const token = data?.data?.access_token
+                const user = data?.data?.user
+           
+                console.log(user);
+                
+
+                // if(user)
+                // {
+                //        localStorage.setItem('user', token)
+                // }
+
+
                 this.message = data?.messages
+
 
                 if(token)
                 {
