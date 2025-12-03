@@ -1,55 +1,55 @@
 <template>
 
 
-    <div class="admin-wrapper d-flex">
-        <!--Sidebar-->
-        <nav class="bg-dark text-white p-3" style="width: 240px; min-height: 100vh;">
-            <h5 class="mb-4">Admin Panel</h5>
-            <ul class="nav flex-column">
-                <li nav-item mb-2>
-                    <router-link
-                    class="nav-link text-white"
-                    active-class="active"
-                    :to="{ name: 'admin.dashboard'}"
-                    >
-                     Dashboard
-                    </router-link>
-                </li>
+   <header class="bg-white border-bottom">
+    <div class="container d-flex justify-content-between align-items-center py-3">
+      <div class="d-flex align-items-center gap-3">
+        <a class="h5 mb-0 text-decoration-none" href="admin_dashboard.html">SimpleShop Admin</a>
+        <span class="muted-small">/ Dashboard</span>
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <a class="btn btn-outline-secondary btn-sm" href="index.html" role="button">View site</a>
+        <button class="btn btn-outline-danger btn-sm" @click="handleLogout" role="button">Logout</button>
+      </div>
+    </div>
+  </header>
 
-                <!-- future admin menu items here  -->
+  <main class="admin-wrap">
+    <div class="container">
+      <div class="row g-4">
+        <!-- Sidebar -->
+        <aside class="col-lg-3 sidebar">
+          <div class="card">
+            <div class="card-body">
+              <h6 class="mb-1">Administrator</h6>
+              <p class="mb-0 muted-small">admin@example.com</p>
+            </div>
+          </div>
 
-                <li class="nav-item mt-4">
-                   <button
-                   class="btn btn-outline-light btn-sm w-100"
-                   @click="handleLogout"
-                   >
-                    Logout
-                   </button>
-                </li>
-            </ul>
-        </nav>
-        <!--Main Content-->
-        <div class="flex-grow-1">
-            <!-- Top bar -->
-             <header 
-             class="bg-light border-bottom py-2 px-3 d-flex justify-content-between align-items-center">
-                <div>
-                    <strong>{{ auth.user?.name || 'Administrator'}}</strong>
-                    <small class="text-muted ms-2">
-                        {{ auth.user?.email || 'admin@example.com' }}
-                    </small>
-                </div>
-                <span class="badge bg-primary text-uppercase">
-                    {{ auth.user?.role || 'ADMIN' }}
-                </span>
-             </header>
+          <nav class="list-group mt-3">
+            <a href="admin_dashboard.html" class="list-group-item list-group-item-action active">Overview</a>
+            <a v-if="auth.hasPermission('manage orders')" class="list-group-item list-group-item-action">Orders</a>
+            <a href="#products" class="list-group-item list-group-item-action">Products</a>
+            <a href="#customers" class="list-group-item list-group-item-action">Customers</a>
+            <a href="#settings" class="list-group-item list-group-item-action">Settings</a>
+          </nav>
+        </aside>
 
-             <!-- page content from current route -->
-              <main>
-                <slot />
-              </main>
-           </div>
-         </div>
+        <!-- Main content -->
+        <section class="col-lg-9 main">
+         
+            <slot></slot>
+
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-light py-3 mt-5">
+    <div class="container text-center small">
+      &copy; 2025 SimpleShop Admin
+    </div>
+  </footer>
 
 
 
@@ -61,6 +61,21 @@ import { useAuth } from '../../../stores/auth';
 
 const auth = useAuth()
 
-
+const handleLogout = async ()=> {
+    auth.logout('/admin/login')
+}
 
 </script>
+
+  <style>
+    /* Admin dashboard specific styles (no JS) */
+    .admin-wrap { padding: 2.5rem 0; }
+    .sidebar { min-width: 220px; }
+    .stat { padding: 1rem; }
+    .table-actions { min-width: 140px; }
+    .muted-small { color: #6c757d; font-size: .9rem; }
+    @media (max-width: 767px) {
+      .sidebar { order: 2; }
+      .main { order: 1; }
+    }
+  </style>
