@@ -100,6 +100,7 @@ export const useAuth = defineStore('auth', {
         {
             this.access_token = null 
             localStorage.removeItem('access_token')
+            localStorage.removeItem('user')
             this.email = ''
 
             toast.success('Logout successful!')

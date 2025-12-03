@@ -27,11 +27,59 @@
           </div>
 
           <nav class="list-group mt-3">
-            <a href="admin_dashboard.html" class="list-group-item list-group-item-action active">Overview</a>
-            <a v-if="auth.hasPermission('manage orders')" class="list-group-item list-group-item-action">Orders</a>
-            <a href="#products" class="list-group-item list-group-item-action">Products</a>
-            <a href="#customers" class="list-group-item list-group-item-action">Customers</a>
-            <a href="#settings" class="list-group-item list-group-item-action">Settings</a>
+            <router-link 
+            v-if="auth.hasPermission('view dashboard')" 
+            to="/admin/dashboard"
+            class="list-group-item list-group-item-action"
+            :class="{ active: $route.path.includes('/admin/dashboard')}"
+            >
+            Dashboard
+            </router-link>
+
+            <router-link 
+            v-if="auth.hasPermission('manage users')" 
+            to="/admin/users"
+            class="list-group-item list-group-item-action"
+            :class="{ active: $route.path.includes('/admin/users')}"
+            >
+            Users
+           </router-link>
+
+           <router-link 
+            v-if="auth.hasPermission('manage orders')" 
+            to="/admin/orders"
+            class="list-group-item list-group-item-action"
+            :class="{ active: $route.path.includes('/admin/orders')}"
+            >
+            Orders
+           </router-link>
+
+            <router-link
+            v-if="auth.hasPermission('manage categories')" 
+            to="/admin/categories" 
+            class="list-group-item list-group-item-action"
+            :class="{ active: $route.path.includes('/admin/categories')}"
+            >
+            Categories
+            </router-link>
+
+           <router-link 
+            v-if="auth.hasPermission('manage products')"
+            to="/admin/products"
+            class="list-group-item list-group-item-action"
+            :class="{ active: $route.path.includes('/admin/products')}"
+            >
+              Products
+            </router-link>
+           <router-link 
+            v-if="auth.hasPermission('manage products')"
+            to="/admin/settings" 
+            class="list-group-item list-group-item-action"
+            :class="{ active: $route.path.includes('/admin/settings')}"
+            >
+              Settings
+            </router-link>
+
           </nav>
         </aside>
 
@@ -58,8 +106,12 @@
 
 <script setup>
 import { useAuth } from '../../../stores/auth';
+// import { useRoute, useRouter } from 'vue-router';
 
 const auth = useAuth()
+const route = useRoute()
+const router = useRouter()
+
 
 const handleLogout = async ()=> {
     auth.logout('/admin/login')
