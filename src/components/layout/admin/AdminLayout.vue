@@ -106,7 +106,7 @@
 
 <script setup>
 import { useAuth } from '../../../stores/auth';
-// import { useRoute, useRouter } from 'vue-router';
+ import { useRoute, useRouter } from 'vue-router';
 
 const auth = useAuth()
 const route = useRoute()
